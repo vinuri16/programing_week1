@@ -1,11 +1,11 @@
 function check() {
     const weightInput = document.getElementById('weight').value;
     const weight = parseFloat(weightInput);
-    const result = document.getElementById('result'); // Element to show result
+    const result = document.getElementById('result'); 
 
     if (isNaN(weight)) {
         alert("Please enter a valid number for baggage weight.");
-        result.textContent = ""; // Clear previous result
+        result.textContent = ""; 
         return;
     }
 
@@ -15,7 +15,7 @@ function check() {
         const excess = weight - limit;
         alert("Overweight baggage! (" + weight + " kg)\n" +
               "You need to reduce " + excess + " kg to meet the " + limit + " kg limit.");
-        // Display on page
+
         result.textContent = "You need to reduce " + excess + " kg.";
         result.style.color = "red";
     } else {
