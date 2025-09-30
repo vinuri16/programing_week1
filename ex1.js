@@ -9,7 +9,7 @@ function check() {
         return;
     }
 
-    const limit = 15;
+    const limit = 32;
 
     if (weight > limit) {
         const excess = weight - limit;
@@ -24,3 +24,4 @@ function check() {
         result.style.color = "green";
     }
 }
+
