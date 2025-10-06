@@ -1,55 +1,63 @@
-<HTml>
-    <head>
-        <script src="ex1.js"></script>
-        <script src="ex2.js"></script>
-    </head>
-    <body>
-        <h1>Exercise 1</h1>
-        <p>        <input type="text" id="weight">
-        <!--//replace check function.-->
-        <button onclick="check()">Check Baggage</button></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercises</title>
+    <!-- Link scripts with defer so DOM is ready before JS runs -->
+    <script src="ex1.js" defer></script>
+    <script src="ex2.js" defer></script>
+    <script src="ex3.js" defer></script>
+</head>
+<body>
+    <h1>Exercise 1: Baggage Checker</h1>
+    <p>
+        <input type="text" id="weight" placeholder="Enter baggage weight">
+        <button onclick="check()">Check Baggage</button>
+    </p>
+    <p>
+        <input type="text" id="removed" style="display:none;" placeholder="Enter weight to remove">
+        <button id="remB" onclick="remove()" style="display:none;">Remove this much baggage (kg)</button>
+    </p>
 
-<p>
-        <input type="text" id="removed" style='display:none;'>
-        <!--//replace remove function.-->
-        <button id='remB' onclick="remove()" style='display:none;'>Remove this much baggage (kg)</button>
+    <hr>
 
-</p>
+    <h1>Exercise 2: Project Euler Multiples</h1>
+    <p>
+        <button onclick="euler1()">Press for solution to Project Euler (3 or 5 below 1000)</button>
+    </p>
+    <p>
+        <label for="a">A</label>
+        <input type="text" id="a">
+        <label for="b">B</label>
+        <input type="text" id="b">
+        <label for="n">N</label>
+        <input type="text" id="n">
+        <button onclick="eulerCustom()">Press for custom sum of multiples</button>
+    </p>
 
-<h1>Exercise 2</h1>
-    <p><button onclick="euler1()">Press for solution to project Euler</button>
-</p>
+    <hr>
 
-<p>
-       <label for="a:">A</label> <input type="text" id="a">
-        <label for="b:">B</label><input type="text" id="b">
-       <label for="n:">N</label> <input type="text" id="n">
+    <h1>Exercise 3: Lists of Multiples</h1>
 
-</p>
-    <p><button onclick="eulerCustom()">Press for custom sum of multiples</button>
+    <p>
+        Sum of multiples of a or b in list l. <br>
+        <label for="a1">A</label>
+        <input type="text" id="a1">
+        <label for="b1">B</label>
+        <input type="text" id="b1">
+        <label for="l">L (comma-separated list)</label>
+        <input type="text" id="l">
+        <button onclick="eulerListAB()">Press for solution</button>
+    </p>
 
- <h1>Exercise 3</h1>
-<p>
-Sum of multiples of a or b in list l.
-       <label for="a:">A</label> <input type="text" id="a1"><br>
-        <label for="b:">B</label><input type="text" id="b1"><br>
-       <label for="l:">L</label> <input type="text" id="l">
+    <p>
+        Part 1: compute the sum of multiples of elements in list A, found in list L. <br>
+        <label for="aList">A (comma-separated)</label>
+        <input type="text" id="aList">
+        <label for="mList">L (comma-separated)</label>
+        <input type="text" id="mList">
+        <button onclick="euler2Lists()">Press for custom sum of multiples</button>
+        <button onclick="euler2ListsAny()">Press for custom sum of multiples (any length A)</button>
+    </p>
 
-</p>
-    <p><button onclick="eulerlist()">Press for solution to project Euler</button>
-</p>
-
-<p>
-
-    Part 1: compute the sum of multiples of elements in list a, found in list l. List a is of length 2
-    <br>
-    Part 1: compute the sum of multiples of elements in list a, found in list l. List a may be any length
-       <label for="aList:">A</label> <input type="text" id="aList">
-        <label for="mList:">L</label> <input type="text" id="mList">
-
-</p>
-    <p><button onclick="euler2Lists()">Press for custom sum of multiples</button>
-    <p><button onclick="euler2Lists1()">Press for custom sum of multiples</button>
-
-    </body>
-</HTml>
+</body>
+</html>
