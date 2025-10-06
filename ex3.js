@@ -1,65 +1,59 @@
-// Exercise 3: Sum of multiples in lists
+// Exercise 3: multiples with lists
+
+// Helper to parse comma-separated numbers safely
+function parseList(str) {
+    return str.replace(/[\[\]\s]/g, '')  // remove [ ] and spaces
+              .split(',')
+              .map(x => Number(x))
+              .filter(x => !isNaN(x));
+}
 
 // Part 1: Sum of multiples of a or b in list l
-function eulerlist() {
+function eulerListAB() {
     let a = parseInt(document.getElementById("a1").value);
     let b = parseInt(document.getElementById("b1").value);
-    let l = document.getElementById("l").value.split(",").map(Number);
+    let l = parseList(document.getElementById("l").value);
 
-    if (isNaN(a) || isNaN(b) || l.some(isNaN)) {
+    if (isNaN(a) || isNaN(b) || l.length === 0) {
         alert("Please enter valid numbers.");
         return;
     }
 
-    let sum = 0;
-    l.forEach(num => {
-        if (num % a === 0 || num % b === 0) {
-            sum += num;
-        }
-    });
-
+    let sum = l.reduce((acc, num) => (num % a === 0 || num % b === 0) ? acc + num : acc, 0);
     alert("Sum of multiples in list l = " + sum);
 }
 
-// Part 2: List a is length 2
+// Part 2: List a of length 2
 function euler2Lists() {
-    let aList = document.getElementById("aList").value.split(",").map(Number);
-    let mList = document.getElementById("mList").value.split(",").map(Number);
+    let aList = parseList(document.getElementById("aList").value);
+    let mList = parseList(document.getElementById("mList").value);
 
-    if (aList.some(isNaN) || mList.some(isNaN)) {
-        alert("Please enter valid lists (comma-separated numbers).");
+    if (aList.length === 0 || mList.length === 0) {
+        alert("Please enter valid lists.");
         return;
     }
 
-    let sum = 0;
-    mList.forEach(num => {
-        for (let a of aList) {
-            if (num % a === 0) {
-                sum += num;
-                break;
-            }
-        }
-    });
+    let sum = mList.reduce((acc, num) => {
+        return aList.some(a => num % a === 0) ? acc + num : acc;
+    }, 0);
 
     alert("Sum of multiples (List A into List M): " + sum);
 }
 
 // Part 3: List a may be any length
-function euler2Lists1() {
-    let aList = document.getElementById("aList").value.split(",").map(Number);
-    let mList = document.getElementById("mList").value.split(",").map(Number);
+function euler2ListsAny() {
+    let aList = parseList(document.getElementById("aList").value);
+    let mList = parseList(document.getElementById("mList").value);
 
-    if (aList.some(isNaN) || mList.some(isNaN)) {
-        alert("Please enter valid lists (comma-separated numbers).");
+    if (aList.length === 0 || mList.length === 0) {
+        alert("Please enter valid lists.");
         return;
     }
 
     let sum = 0;
     aList.forEach(a => {
         mList.forEach(num => {
-            if (num % a === 0) {
-                sum += num;
-            }
+            if (num % a === 0) sum += num;
         });
     });
 
