@@ -1,66 +1,83 @@
+// ex5.js
+
 function computeFactorsMultiplesEx5() {
-    const input = document.getElementById("ex4input").value.trim();
-    const output = document.getElementById("ex4output");
-    
-    // Check colon
+    const original = document.getElementById("ex5input").value;
+    const input = original.trim();
+    const outputEl = document.getElementById("ex5output");
+
     if (!input.includes(":")) {
-        output.textContent = "corrupt : " + input;
+        outputEl.textContent = "corrupt : " + original;
         return;
     }
 
-    let [factorsStr, multiplesStr] = input.split(":").map(s => s.trim());
+    const parts = input.split(":");
+    if (parts.length < 2) { // more robust than just includes
+        outputEl.textContent = "corrupt : " + original;
+        return;
+    }
 
-    let factors = factorsStr.split(" ");
-    let multiples = multiplesStr.split(" ");
+    const factorsStr = parts[0].trim();
+    const multiplesStr = parts.slice(1).join(":").trim(); // allow extra colons in right part
+
+    if (factorsStr === "" || multiplesStr === "") {
+        outputEl.textContent = "corrupt : " + original;
+        return;
+    }
+
+    const factorTokens = getTokens(factorsStr);
+    const multipleTokens = getTokens(multiplesStr);
 
     let validFactors = [];
     let validMultiples = [];
     let corrupt = false;
 
-    // Parse factors
-    for (let f of factors) {
-        try {
-            validFactors.push(parseIntChecked(f));
-        } catch (e) {
+    // parse tokens strictly: only optional leading '-' and digits allowed
+    for (let t of factorTokens) {
+        if (isStrictInteger(t)) {
+            validFactors.push(Number(t));
+        } else {
             corrupt = true;
         }
     }
 
-    // Parse multiples
-    for (let m of multiples) {
-        try {
-            validMultiples.push(parseIntChecked(m));
-        } catch (e) {
+    for (let t of multipleTokens) {
+        if (isStrictInteger(t)) {
+            validMultiples.push(Number(t));
+        } else {
             corrupt = true;
         }
     }
 
-    // If all are invalid
+    // If one side has no valid numbers -> cannot compute
     if (validFactors.length === 0 || validMultiples.length === 0) {
-        output.textContent = "corrupt : " + input;
+        outputEl.textContent = "corrupt : " + original;
         return;
     }
 
-    // Compute sum of multiples
+    // compute sum of multiples (omit corrupted values)
     let sum = 0;
     for (let num of validMultiples) {
         for (let f of validFactors) {
-            if (num % f === 0) {
+            if (f !== 0 && num % f === 0) { // avoid division by zero
                 sum += num;
                 break;
             }
+            // if f === 0, skip (0 can't be a valid divisor)
         }
     }
 
-    if (corrupt)
-        output.textContent = sum + " : " + input;
-    else
-        output.textContent = sum + " : " + input;
+    // Output: "<sum> : <original input>" (corrupted values omitted from computation)
+    outputEl.textContent = sum + " : " + original;
 }
 
-// helper
-function parseIntChecked(i) {
-    let n = parseInt(i);
-    if (isNaN(n)) throw "NaN";
-    return n;
+// helpers
+function getTokens(s) {
+    // Return array of non-empty tokens separated by any whitespace
+    const arr = s.match(/\S+/g);
+    return arr ? arr : [];
+}
+
+function isStrictInteger(tok) {
+    // Matches optional leading + or - and then one or more digits, no trailing garbage
+    return /^[-+]?\d+$/.test(tok);
 }
